@@ -1,11 +1,12 @@
 from model import PianistModel
+from audio import play_wav_files
 import torch
 import sys
 import numpy as np
 import pickle
 
-if len(sys.argv) < 3:
-    print("Usage: python generate.py <model_name> <max_new_tokens>")
+if len(sys.argv) < 4:
+    print("Usage: python generate.py <model_name> <max_new_tokens> <audio_file_name>")
     sys.exit(1)
 
 cuda_available = torch.cuda.is_available()
@@ -71,3 +72,7 @@ print("Generated Notes:", generated_notes)
 print("Decoded Durations:", decoded_durations_list)
 print("Decoded Velocities:", decoded_velocities_list)
 assert len(generated_notes) == len(decoded_durations_list) == len(decoded_velocities_list)
+
+output_path = f'/workspace/outputs/{sys.argv[3]}.wav'
+play_wav_files(generated_notes, output_path, decoded_velocities_list, decoded_durations_list)
+print(f"Audio file saved to {output_path}")

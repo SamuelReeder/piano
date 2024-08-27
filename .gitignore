@@ -5,3 +5,5 @@ models
 docker_requirements.txt
 workspace
 __pycache__
+outputs
+piano_notes
