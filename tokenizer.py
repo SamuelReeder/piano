@@ -20,6 +20,8 @@ class Tokenizer(object):
         self.notes = Notes()
         self.end_of_song_token = "<EOS>"
         self.base_path = base_path
+        self.max_duration = None
+        self.max_velocity = None
         self.notes.add_note(self.end_of_song_token)
 
     def tokenize(self, path):
@@ -51,6 +53,9 @@ class Tokenizer(object):
             combined_ids.extend(song_ids)
             combined_durations.extend(durations)
             combined_velocities.extend(velocities)
+            
+        self.max_duration = max(combined_durations)
+        self.max_velocity = 127
         return combined_ids, combined_durations, combined_velocities
     
     

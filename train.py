@@ -1,3 +1,4 @@
+import pickle
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -12,6 +13,14 @@ import sys
 if len(sys.argv) < 2:
     print("Usage: python train.py <model_name>")
     sys.exit(1)
+    
+cuda_available = torch.cuda.is_available()
+print(f"CUDA available: {cuda_available}")
+
+if cuda_available:
+    print(torch.cuda.get_device_name(0))
+
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # hyperparameters
 batch_size = 64 # how many independent sequences will we process in parallel?
@@ -43,11 +52,8 @@ data[:block_size+1]
 
 vocab_size = len(tokenizer.notes)
 
-max_duration = max(durations)
-durations_tensor = torch.tensor(durations, dtype=torch.float32) / max_duration
-
-max_velocity = 127
-velocities_tensor = torch.tensor(velocities, dtype=torch.float32) / max_velocity
+durations_tensor = torch.tensor(durations, dtype=torch.float32) / tokenizer.max_duration
+velocities_tensor = torch.tensor(velocities, dtype=torch.float32) / tokenizer.max_velocity
 
 def get_batch(split):
     # small batch of data of inputs x and targets y
@@ -112,3 +118,22 @@ for iter in range(max_iters):
 model_save_path = f'/workspace/models/{sys.argv[1]}.pth'
 torch.save(m.state_dict(), model_save_path)
 print(f"Model saved to {model_save_path}")
+
+# save model settings
+model_settings = {
+    'vocab_size': vocab_size,
+    'n_embd': n_embd,
+    'block_size': block_size,
+    'n_head': n_head,
+    'n_layer': n_layer,
+    'dropout': dropout
+}
+model_settings_save_path = f'/workspace/models/{sys.argv[1]}.json'
+np.save(model_settings_save_path, model_settings)
+print(f"Model settings saved to {model_settings_save_path}")
+
+# save tokenizer
+tokenizer_save_path = f'/workspace/models/{sys.argv[1]}_tokenizer.pkl'
+with open(tokenizer_save_path, 'wb') as f:
+    pickle.dump(tokenizer, f)
+print(f"Tokenizer saved to {tokenizer_save_path}")
