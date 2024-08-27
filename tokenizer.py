@@ -1,4 +1,5 @@
 import pandas as pd
+import os
 
 class Notes(object):
     def __init__(self):

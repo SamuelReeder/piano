@@ -1,1 +1,7 @@
 venv
+training
+notes
+models
+docker_requirements.txt
+workspace
+__pycache__

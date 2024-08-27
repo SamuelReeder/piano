@@ -7,12 +7,16 @@ import os
 import numpy as np
 from model import PianistModel
 from tokenizer import Tokenizer
+import sys
 
+if len(sys.argv) < 2:
+    print("Usage: python train.py <model_name>")
+    sys.exit(1)
 
 # hyperparameters
 batch_size = 64 # how many independent sequences will we process in parallel?
 block_size = 256 # what is the maximum context length for predictions?
-max_iters = 10000
+max_iters = 100 # typicallys set to > 5000 for full training
 eval_interval = 50
 learning_rate = 3e-4
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
@@ -105,8 +109,6 @@ for iter in range(max_iters):
     loss.backward()
     optimizer.step()
 
-# Save the model
-model_save_path = 'pianist_model1.pth'
+model_save_path = f'/workspace/models/{sys.argv[1]}.pth'
 torch.save(m.state_dict(), model_save_path)
 print(f"Model saved to {model_save_path}")
-
