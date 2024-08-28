@@ -1,19 +1,12 @@
 # Variables
 IMAGE_NAME = pytorch-container
-REMOTE_IMAGE = samuelreeder/piano:$(IMAGE_NAME)
 DOCKERFILE_PATH = .
 WORKDIR = /workspace
 HOST_PORT = 8888
 
 # Default target
 .PHONY: all
-all: setup build run
-
-# Setup target for a new machine
-.PHONY: setup
-setup:
-	@which docker || (echo "Docker is not installed. Please install Docker before proceeding." && exit 1)
-	docker pull $(REMOTE_IMAGE) || echo "Remote image not found, proceeding to build locally..."
+all: build run
 
 # Build the Docker image
 .PHONY: build

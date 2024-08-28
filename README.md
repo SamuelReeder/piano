@@ -28,14 +28,6 @@ This project is fully Dockerized, meaning all dependencies and environment setup
 
 To build the Docker image, use the Makefile:
 
-If this is your first time running the project, you should set up the Docker image first by pulling it from the Docker Hub:
-
-```bash
-make setup
-```
-
-Otherwise, you can build the Docker image directly:
-
 ```bash
 make build
 ```
