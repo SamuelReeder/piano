@@ -12,7 +12,7 @@ all: build run
 .PHONY: build
 build:
 	@echo "Building Docker image..."
-	docker build -t $(IMAGE_NAME) -t $(REMOTE_IMAGE) $(DOCKERFILE_PATH)
+	docker build -t $(IMAGE_NAME) $(DOCKERFILE_PATH)
 
 # Run the Docker container interactively with GPU support
 .PHONY: run
