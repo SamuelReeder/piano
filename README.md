@@ -4,7 +4,7 @@ A transformer-based model that can generate sequences of piano notes and their r
 
 ## Example Music Generation
 
-[Watch the video](./example.wav)
+[Watch the video](./piano_demonstration.mp4)
 
 This is an example piano music generation from a model trained on 10000 training iterations with a learning rate of `3e-4` with 256 emedding dimensions, 6 transformer blocks, and 6 heads in each multi-head self attention layer. The script to convert the tokens, durations, and velocities into an audio file has its limitations. Namely, that each note's reverb will be cut off when the next notes begins; however, this example still exhibits the models understanding of melody, chord progression, etc., despite the lossiness in the audio file creation scheme. 
 
