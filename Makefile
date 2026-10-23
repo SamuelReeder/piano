@@ -1,42 +1,41 @@
-# Variables
-IMAGE_NAME = pytorch-container
-DOCKERFILE_PATH = .
-WORKDIR = /workspace
-HOST_PORT = 8888
+# Common workflows; see README.md for details. Requires uv (https://docs.astral.sh/uv/).
+# TORCH=cpu for machines without an NVIDIA GPU
+TORCH ?= cu128
+CKPT ?= checkpoints/finetune/best.pt
 
-# Default target
-.PHONY: all
-all: build run
+.PHONY: setup data soundfont pretrain finetune samples evaluate figures test lint
 
-# Build the Docker image
-.PHONY: build
-build:
-	@echo "Building Docker image..."
-	docker build -t $(IMAGE_NAME) $(DOCKERFILE_PATH)
+setup:
+	uv sync --extra $(TORCH) --extra viz
 
-# Run the Docker container interactively with GPU support
-.PHONY: run
-run:
-	@echo "Running Docker container..."
-	docker run -it --gpus all -v $(shell pwd):$(WORKDIR) $(IMAGE_NAME) /bin/bash
+data:
+	uv run pianist-prepare --aria
 
-# Clean up stopped containers and dangling images
-.PHONY: clean
-clean:
-	@echo "Cleaning up stopped containers and unused images..."
-	docker container prune -f
-	docker image prune -f
+soundfont:
+	uv run python -m pianist.render --download
 
-# Stop and remove the Docker container
-.PHONY: stop
-stop:
-	@echo "Stopping and removing the Docker container..."
-	docker stop $(IMAGE_NAME) || true
-	docker rm $(IMAGE_NAME) || true
+pretrain:
+	uv run pianist-train --run pretrain --train-data aria,train
 
-# Remove the Docker image
-.PHONY: rmi
-rmi:
-	@echo "Removing the Docker image..."
-	docker rmi $(IMAGE_NAME)
-	docker rmi $(REMOTE_IMAGE)
+finetune:
+	uv run pianist-train --run finetune --init checkpoints/pretrain/best.pt --train-data train \
+		--steps 3000 --lr 1e-4 --min-lr 1e-5 --warmup 200 --eval-every 250 --patience 3
+
+samples:
+	uv run pianist-generate $(CKPT) --num 16 --max-tokens 5000 --max-seconds 100 \
+		--min-notes 300 --render mp3 --out-dir outputs/candidates
+	uv run python scripts/select_sample.py outputs/candidates
+
+evaluate:
+	uv run pianist-evaluate $(CKPT) --samples outputs/candidates --out docs/results/final.json
+
+figures:
+	uv run python scripts/plot_figures.py samples/sample-15.mid \
+		--run "MAESTRO only, 39M" checkpoints/maestro-only/metrics.jsonl \
+		--run "Aria-MIDI pretraining, 85M" checkpoints/pretrain/metrics.jsonl
+
+test:
+	uv run pytest -q
+
+lint:
+	uv run ruff check .

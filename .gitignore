@@ -1,9 +1,12 @@
-venv
-training
-notes
-models
-docker_requirements.txt
-workspace
-__pycache__
-outputs
-piano_notes
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/
+
+# Data, weights and scratch output (see README for how to recreate them)
+data/
+checkpoints/
+*.log
+outputs/

@@ -1,0 +1,13 @@
+{
+  "checkpoint": "finetune/best.pt",
+  "step": 250,
+  "seed": 2,
+  "temperature": 1.0,
+  "top_p": 0.95,
+  "max_tokens": 5000,
+  "max_seconds": 95.0,
+  "min_notes": 300,
+  "prompt": "MAESTRO v3 test split: MIDI-Unprocessed_R1_D1-9-12_mid--AUDIO-from_mp3_12_R1_2015_wav--3.midi",
+  "notes": 388,
+  "seconds": 84.07
+}

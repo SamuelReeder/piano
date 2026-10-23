@@ -1,0 +1,29 @@
+{
+  "checkpoint": "checkpoints/pretrain/best.pt",
+  "step": 18000,
+  "split": "test",
+  "pieces": 177,
+  "n_params": 85175808,
+  "model": {
+    "nll_per_token": 1.759432315826416,
+    "perplexity": 5.809138702080139,
+    "bits_per_note": 9.693288803100586,
+    "tokens": 2831278,
+    "nll_special": 2.2828361988067627,
+    "nll_shift": 1.9419026374816895,
+    "nll_pitch": 1.368031620979309,
+    "nll_velocity": 1.9028509855270386,
+    "nll_duration": 1.8579307794570923
+  },
+  "bigram_baseline": {
+    "nll_per_token": 3.571262483390323,
+    "perplexity": 35.561460576793394,
+    "bits_per_note": 19.675255708680858,
+    "tokens": 2831278,
+    "nll_special": 7.223980244326279,
+    "nll_shift": 3.3032571142145506,
+    "nll_pitch": 4.346735532492619,
+    "nll_velocity": 2.8950987578008105,
+    "nll_duration": 3.690453254768874
+  }
+}

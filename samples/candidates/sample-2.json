@@ -1,0 +1,13 @@
+{
+  "checkpoint": "finetune/best.pt",
+  "step": 250,
+  "seed": 2,
+  "temperature": 1.0,
+  "top_p": 0.95,
+  "max_tokens": 5000,
+  "max_seconds": 100.0,
+  "min_notes": 300,
+  "prompt": null,
+  "notes": 623,
+  "seconds": 95.95
+}

@@ -1,0 +1,29 @@
+{
+  "checkpoint": "checkpoints/maestro-only/best.pt",
+  "step": 4000,
+  "split": "test",
+  "pieces": 177,
+  "n_params": 38696448,
+  "model": {
+    "nll_per_token": 1.97010338306427,
+    "perplexity": 7.171417853176491,
+    "bits_per_note": 10.8539457321167,
+    "tokens": 2831278,
+    "nll_special": 3.1797494888305664,
+    "nll_shift": 2.144773006439209,
+    "nll_pitch": 1.7459831237792969,
+    "nll_velocity": 1.9736039638519287,
+    "nll_duration": 2.0474603176116943
+  },
+  "bigram_baseline": {
+    "nll_per_token": 3.571262483390323,
+    "perplexity": 35.561460576793394,
+    "bits_per_note": 19.675255708680858,
+    "tokens": 2831278,
+    "nll_special": 7.223980244326279,
+    "nll_shift": 3.3032571142145506,
+    "nll_pitch": 4.346735532492619,
+    "nll_velocity": 2.8950987578008105,
+    "nll_duration": 3.690453254768874
+  }
+}

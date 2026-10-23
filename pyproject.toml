@@ -1,0 +1,60 @@
+[project]
+name = "pianist"
+version = "2.0.0"
+description = "A decoder-only transformer that composes expressive solo piano music, pretrained on Aria-MIDI and fine-tuned on MAESTRO."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+authors = [{ name = "Samuel Reeder" }]
+dependencies = [
+    "mido>=1.3",
+    "numpy>=1.26",
+]
+
+[project.optional-dependencies]
+# Pick exactly one torch build: `uv sync --extra cu128` on an NVIDIA GPU, `--extra cpu` otherwise.
+cpu = ["torch>=2.7"]
+cu128 = ["torch>=2.7"]
+viz = ["matplotlib>=3.8"]
+
+[project.scripts]
+pianist-prepare = "pianist.data:main"
+pianist-train = "pianist.train:main"
+pianist-generate = "pianist.generate:main"
+pianist-evaluate = "pianist.evaluate:main"
+
+[dependency-groups]
+dev = ["pytest>=8", "ruff>=0.6"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.uv]
+conflicts = [[{ extra = "cpu" }, { extra = "cu128" }]]
+
+[tool.uv.sources]
+torch = [
+    { index = "pytorch-cpu", extra = "cpu" },
+    { index = "pytorch-cu128", extra = "cu128" },
+]
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

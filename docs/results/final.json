@@ -1,0 +1,55 @@
+{
+  "checkpoint": "checkpoints/finetune/best.pt",
+  "step": 250,
+  "split": "test",
+  "pieces": 177,
+  "n_params": 85175808,
+  "model": {
+    "nll_per_token": 1.7539547681808472,
+    "perplexity": 5.777405856488011,
+    "bits_per_note": 9.663111686706543,
+    "tokens": 2831278,
+    "nll_special": 2.433311939239502,
+    "nll_shift": 1.9439295530319214,
+    "nll_pitch": 1.35965895652771,
+    "nll_velocity": 1.8925073146820068,
+    "nll_duration": 1.8540349006652832
+  },
+  "bigram_baseline": {
+    "nll_per_token": 3.571262483390323,
+    "perplexity": 35.561460576793394,
+    "bits_per_note": 19.675255708680858,
+    "tokens": 2831278,
+    "nll_special": 7.223980244326279,
+    "nll_shift": 3.3032571142145506,
+    "nll_pitch": 4.346735532492619,
+    "nll_velocity": 2.8950987578008105,
+    "nll_duration": 3.690453254768874
+  },
+  "music_stats": {
+    "generated": {
+      "notes_per_second": 8.468,
+      "notes_per_onset": 1.224,
+      "pitch_mean": 62.219,
+      "pitch_std": 10.926,
+      "pitch_range": 56.438,
+      "velocity_mean": 61.806,
+      "velocity_std": 15.401,
+      "duration_median_s": 0.462,
+      "pitch_class_entropy_bits": 2.898
+    },
+    "test_excerpts": {
+      "notes_per_second": 11.109,
+      "notes_per_onset": 1.205,
+      "pitch_mean": 64.162,
+      "pitch_std": 12.186,
+      "pitch_range": 60.621,
+      "velocity_mean": 63.388,
+      "velocity_std": 16.385,
+      "duration_median_s": 0.339,
+      "pitch_class_entropy_bits": 3.268
+    },
+    "n_generated": 16,
+    "excerpt_seconds": 92.2
+  }
+}
